@@ -1,37 +1,19 @@
 "use client"
 import { useState } from "react"
 
-export default function UrlForm() {
-  const [recipeUrl, setRecipeUrl] = useState("")
-  const [error, setError] = useState(null)
-  const [responseData, setResponseData] = useState(null)
-
-  const checkRecipe = async () => {
-    try {
-      const response = await fetch("/api/extract", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url: recipeUrl,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-
-      const data = await response.json()
-      setResponseData(data)
-    } catch (err) {
-      setError(err.message)
-    }
-  }
-
+interface UrlFormProps {
+  updateRecipeUrl: (newUrl: string) => void
+  url: string
+  getRecipe: () => void
+}
+export default function UrlForm({
+  updateRecipeUrl,
+  url,
+  getRecipe,
+}: UrlFormProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    checkRecipe()
+    getRecipe()
   }
 
   return (
@@ -41,8 +23,8 @@ export default function UrlForm() {
         <input
           id='urlField'
           type='recipeUrl'
-          value={recipeUrl}
-          onChange={(e) => setRecipeUrl(e.target.value)}
+          value={url}
+          onChange={(e) => updateRecipeUrl(e.target.value)}
           placeholder='Paste recipe URL'
           required
         />
