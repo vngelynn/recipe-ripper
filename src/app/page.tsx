@@ -22,9 +22,9 @@ export default function Home() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
-
       const data = await response.json()
       setResponseData(data)
+      setRecipeUrl("")
     } catch (err) {
       setError(err.message)
     }

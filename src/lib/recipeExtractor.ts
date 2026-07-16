@@ -1,10 +1,6 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
-// TODO: make URL dynamic, passed in
-const url =
-  "https://www.yummytoddlerfood.com/baby-muffins/#wprm-recipe-container-13524"
-
 function findRecipe(data: any) {
   if (Array.isArray(data)) {
     return data.find((item) => item["@type"] === "Recipe")
@@ -17,7 +13,7 @@ function findRecipe(data: any) {
   return null
 }
 
-async function extractRecipe() {
+export async function extractRecipe(url: string) {
   const response = await axios.get(url)
 
   const $ = cheerio.load(response.data)
@@ -43,5 +39,3 @@ async function extractRecipe() {
     }
   })
 }
-
-extractRecipe()

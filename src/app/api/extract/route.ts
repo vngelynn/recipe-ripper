@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server"
+import { extractRecipe } from "../../../lib/recipeExtractor"
 
 export async function POST(request: Request) {
   const body = await request.json()
+  const extractedRecipe = extractRecipe(body.url)
 
-  console.log("body in route.ts: ", body)
   return NextResponse.json({
-    receivedUrl: body.url,
+    recipe: extractedRecipe,
   })
 }
