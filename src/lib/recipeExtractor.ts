@@ -1,6 +1,7 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+// TODO: make URL dynamic, passed in
 const url =
   "https://www.yummytoddlerfood.com/baby-muffins/#wprm-recipe-container-13524"
 
@@ -23,19 +24,14 @@ async function extractRecipe() {
 
   const scripts = $('script[type="application/ld+json"]')
 
-  console.log("Found scripts:", scripts.length)
-
   scripts.each((_, element) => {
     const jsonText = $(element).text()
 
-    console.log("RAW JSON:")
-    // console.log(jsonText.slice(0, 1000))
-
     try {
       const data = JSON.parse(jsonText)
-      //   console.log(data)
       const recipe = findRecipe(data["@graph"])
 
+      // TODO: implement logic to stove and display recipe
       if (recipe) {
         console.log("FOUND RECIPE!")
         console.log(recipe.name)
