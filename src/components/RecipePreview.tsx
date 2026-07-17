@@ -1,24 +1,6 @@
 import RecipeDetails from "./RecipeDetails"
-
-// TODO: export types to types.ts
-interface HowToStep {
-  "@type": "HowToStep"
-  text: string
-  name: string
-  url: string
-}
-interface recipe {
-  name: string
-  ingredients: string[]
-  instructions: HowToStep[]
-  image: string
-  servings: string[]
-  prepTime: string
-  cookTime: string
-  totalTime: string
-}
-
-export default function RecipePreview(recipe: recipe) {
+import type { Recipe } from "./types"
+export default function RecipePreview({ recipe }: { recipe: Recipe }) {
   const {
     name,
     ingredients,
