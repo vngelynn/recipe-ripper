@@ -20,22 +20,41 @@ export async function extractRecipe(url: string) {
 
   const scripts = $('script[type="application/ld+json"]')
 
-  scripts.each((_, element) => {
+  for (const element of scripts.toArray()) {
     const jsonText = $(element).text()
 
     try {
       const data = JSON.parse(jsonText)
+
       const recipe = findRecipe(data["@graph"])
 
-      // TODO: implement logic to stove and display recipe
       if (recipe) {
-        console.log("FOUND RECIPE!")
-        console.log(recipe.name)
-        console.log(recipe.recipeIngredient)
-        console.log(recipe.recipeInstructions)
+        const {
+          name,
+          recipeIngredient: ingredients,
+          recipeInstructions: instructions,
+          image,
+          recipeYield: servings,
+          prepTime,
+          cookTime,
+          totalTime,
+        } = recipe
+
+        return {
+          name,
+          ingredients,
+          instructions,
+          image,
+          servings,
+          prepTime,
+          cookTime,
+          totalTime,
+        }
       }
-    } catch (error) {
+    } catch {
       console.log("Could not parse JSON")
     }
-  })
+  }
+
+  return null
 }
