@@ -1,5 +1,6 @@
-import RecipeDetails from "./RecipeDetails"
+import RecipeStat from "./RecipeStat"
 import type { Recipe } from "./types"
+
 export default function RecipePreview({ recipe }: { recipe: Recipe }) {
   const {
     name,
@@ -21,8 +22,11 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         </h1>
         {/* TODO: add get source logic to display clipped from {$} */}
       </div>
-      <div>
-        <RecipeDetails />
+      <div className='grid grid-cols-2 gap-3 sm:grid-cols-4'>
+        <RecipeStat label='servings' value={servings} />
+        <RecipeStat label='prepTime' value={prepTime} />
+        <RecipeStat label='cookTime' value={cookTime} />
+        <RecipeStat label='totalTime' value={totalTime} />
       </div>
     </div>
   )
