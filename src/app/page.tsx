@@ -2,11 +2,12 @@
 import { useState } from "react"
 import UrlForm from "../components/UrlForm"
 import RecipePreview from "@/components/RecipePreview"
+import type { Recipe } from "../components/types"
 
 export default function Home() {
   const [recipeUrl, setRecipeUrl] = useState("")
   const [error, setError] = useState(null)
-  const [recipe, setRecipe] = useState(null)
+  const [recipe, setRecipe] = useState<Recipe | null>(null)
 
   const checkRecipe = async () => {
     try {
@@ -40,7 +41,7 @@ export default function Home() {
           url={recipeUrl}
           getRecipe={checkRecipe}
         />
-        <RecipePreview recipe />
+        {recipe && <RecipePreview recipe={recipe} />}
       </main>
     </div>
   )
