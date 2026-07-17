@@ -6,7 +6,7 @@ import RecipePreview from "@/components/RecipePreview"
 export default function Home() {
   const [recipeUrl, setRecipeUrl] = useState("")
   const [error, setError] = useState(null)
-  const [responseData, setResponseData] = useState(null)
+  const [recipe, setRecipe] = useState(null)
 
   const checkRecipe = async () => {
     try {
@@ -24,7 +24,7 @@ export default function Home() {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
       const data = await response.json()
-      setResponseData(data)
+      setRecipe(data.recipe)
       setRecipeUrl("")
     } catch (err) {
       setError(err.message)
@@ -40,7 +40,7 @@ export default function Home() {
           url={recipeUrl}
           getRecipe={checkRecipe}
         />
-        <RecipePreview />
+        <RecipePreview recipe />
       </main>
     </div>
   )
