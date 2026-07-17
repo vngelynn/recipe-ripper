@@ -1,19 +1,14 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Lora } from "next/font/google"
 import "./globals.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lora = Lora({
   subsets: ["latin"],
-})
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-lora",
 })
 
 export const metadata: Metadata = {
-  title: "Gathered Nook",
+  title: "gathered pantry",
   description: "One place to save favorite simplified recipes",
 }
 
@@ -23,10 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html
-      lang='en'
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang='en' className={`${lora.variable} h-full antialiased`}>
       <body className='min-h-full flex flex-col'>{children}</body>
     </html>
   )
