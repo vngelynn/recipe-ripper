@@ -23,7 +23,8 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         {/* TODO: add get source logic to display clipped from {$} */}
       </div>
       <div className='grid grid-cols-2 gap-3 sm:grid-cols-4'>
-        <RecipeStat label='servings' value={servings} />
+        {/* TODO: investigate 3rd element of servings data response */}
+        <RecipeStat label='servings' value={servings[0]} />
         <RecipeStat label='prepTime' value={prepTime} />
         <RecipeStat label='cookTime' value={cookTime} />
         <RecipeStat label='totalTime' value={totalTime} />
