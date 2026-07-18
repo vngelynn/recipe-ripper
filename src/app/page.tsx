@@ -1,11 +1,13 @@
 "use client"
 import { useState } from "react"
 import UrlForm from "../components/UrlForm"
+import RecipePreview from "@/components/RecipePreview"
+import type { Recipe } from "../components/types"
 
 export default function Home() {
   const [recipeUrl, setRecipeUrl] = useState("")
   const [error, setError] = useState(null)
-  const [responseData, setResponseData] = useState(null)
+  const [recipe, setRecipe] = useState<Recipe | null>(null)
 
   const checkRecipe = async () => {
     try {
@@ -23,7 +25,7 @@ export default function Home() {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
       const data = await response.json()
-      setResponseData(data)
+      setRecipe(data.recipe)
       setRecipeUrl("")
     } catch (err) {
       setError(err.message)
@@ -31,13 +33,15 @@ export default function Home() {
   }
 
   return (
-    <div className='flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black'>
-      <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start'>
+    <div className='flex flex-col flex-1 items-center justify-center font-sans'>
+      <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start'>
+        <h1>gathered pantry</h1>
         <UrlForm
           updateRecipeUrl={setRecipeUrl}
           url={recipeUrl}
           getRecipe={checkRecipe}
         />
+        {recipe && <RecipePreview recipe={recipe} />}
       </main>
     </div>
   )
