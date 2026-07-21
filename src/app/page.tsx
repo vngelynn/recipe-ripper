@@ -1,46 +1,36 @@
 "use client"
 import { useState } from "react"
+import { useExtractRecipe } from "../hooks/useExtractRecipe"
 import UrlForm from "../components/UrlForm"
 import RecipePreview from "@/components/RecipePreview"
-import type { Recipe } from "../components/types"
 
 export default function Home() {
-  const [recipeUrl, setRecipeUrl] = useState("")
-  const [error, setError] = useState(null)
-  const [recipe, setRecipe] = useState<Recipe | null>(null)
+  const [submittedUrl, setSubmittedUrl] = useState("")
 
-  const checkRecipe = async () => {
-    try {
-      const response = await fetch("/api/extract", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          url: recipeUrl,
-        }),
-      })
+  const {
+    data: recipe,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useExtractRecipe(submittedUrl)
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-      const data = await response.json()
-      setRecipe(data.recipe)
-      setRecipeUrl("")
-    } catch (err) {
-      setError(err.message)
-    }
+  const handleCheckRecipe = (url: string) => {
+    setSubmittedUrl(url)
   }
+
+  if (isError) {
+    console.log("Query error occured: ", error.message)
+  }
+  const isWorking = isLoading || isFetching
 
   return (
     <div className='flex flex-col flex-1 items-center justify-center font-sans'>
       <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start'>
         <h1>gathered pantry</h1>
-        <UrlForm
-          updateRecipeUrl={setRecipeUrl}
-          url={recipeUrl}
-          getRecipe={checkRecipe}
-        />
+        <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={isWorking} />
+        {/* TODO: show loading crean if isWorking */}
+        {/* TODO: handle display for errors */}
         {recipe && <RecipePreview recipe={recipe} />}
       </main>
     </div>
