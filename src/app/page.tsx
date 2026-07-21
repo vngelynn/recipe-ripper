@@ -1,42 +1,19 @@
 "use client"
 import { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
+import { useExtractRecipe } from "../hooks/useExtractRecipe"
 import UrlForm from "../components/UrlForm"
 import RecipePreview from "@/components/RecipePreview"
-import type { Recipe } from "../components/types"
 
 export default function Home() {
   const [submittedUrl, setSubmittedUrl] = useState("")
 
-  // TODO: export query function
   const {
     data: recipe,
-    error,
     isLoading,
-    isError,
     isFetching,
-  } = useQuery({
-    queryKey: ["recipe", submittedUrl],
-    queryFn: async () => {
-      const response = await fetch("/api/extract", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ url: submittedUrl }),
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-
-      const resData = await response.json()
-      return resData.recipe
-    },
-    enabled: submittedUrl !== "",
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 60,
-  })
+    isError,
+    error,
+  } = useExtractRecipe(submittedUrl)
 
   const handleCheckRecipe = (url: string) => {
     setSubmittedUrl(url)
