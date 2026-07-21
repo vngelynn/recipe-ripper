@@ -1,11 +1,9 @@
-// app/providers.tsx
 "use client"
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { useState } from "react"
 
 export default function Providers({ children }: { children: React.ReactNode }) {
-  // Creating the QueryClient inside useState prevents it from resetting on rerenders
   const [queryClient] = useState(
     () =>
       new QueryClient({
