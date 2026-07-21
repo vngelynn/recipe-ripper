@@ -1,19 +1,19 @@
 "use client"
 import { useState } from "react"
-
 interface UrlFormProps {
-  updateRecipeUrl: (newUrl: string) => void
-  url: string
-  getRecipe: () => void
+  onUrlSubmit: (url: string) => void
+  isDisabled: boolean
 }
-export default function UrlForm({
-  updateRecipeUrl,
-  url,
-  getRecipe,
-}: UrlFormProps) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    getRecipe()
+
+export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
+  const [recipeUrl, setRecipeUrl] = useState("")
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!recipeUrl.trim()) return
+
+    onUrlSubmit(recipeUrl)
+    setRecipeUrl("")
   }
 
   return (
@@ -23,10 +23,10 @@ export default function UrlForm({
         <input
           id='urlField'
           type='recipeUrl'
-          value={url}
-          onChange={(e) => updateRecipeUrl(e.target.value)}
+          value={recipeUrl}
+          onChange={(e) => setRecipeUrl(e.target.value)}
           placeholder='Paste recipe URL'
-          required
+          disabled={isDisabled}
         />
 
         <button
