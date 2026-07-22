@@ -33,13 +33,12 @@ export default function Home() {
   return (
     <div className='min-h-screen w-full bg-cream text-ink serif'>
       <Navbar />
-
-      <main className='flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start'>
+      <div className='max-w-3xl mx-auto px-10 pb-24'>
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={isWorking} />
         {/* TODO: show loading crean if isWorking */}
         {/* TODO: handle display for errors */}
         {recipe && <RecipePreview recipe={recipe} />}
-      </main>
+      </div>
     </div>
   )
 }
