@@ -1,6 +1,19 @@
 import { useQuery } from "@tanstack/react-query"
 
-export async function extractRecipe(url: string) {
+import mockRecipeData from "../data/mockRecipe.json"
+
+interface UseRecipeOptions {
+  submittedUrl: string
+  isStylingMode?: boolean // Optional parameter
+}
+
+export async function extractRecipe(url: string, isStylingMode?: boolean) {
+  // 1. Mock Data Bypass
+  if (isStylingMode) {
+    await new Promise((resolve) => setTimeout(resolve, 300))
+    return mockRecipeData.recipe
+  }
+
   const response = await fetch("/api/extract", {
     method: "POST",
     headers: {
@@ -20,12 +33,16 @@ export async function extractRecipe(url: string) {
 export const recipeKeys = {
   extract: (url: string) => ["recipe", url] as const,
 }
-export function useExtractRecipe(submittedUrl: string) {
+
+export function useExtractRecipe({
+  submittedUrl,
+  isStylingMode = false,
+}: UseRecipeOptions) {
   return useQuery({
-    queryKey: recipeKeys.extract(submittedUrl),
-    queryFn: () => extractRecipe(submittedUrl),
-    enabled: submittedUrl !== "",
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 60,
+    queryKey: ["recipe", submittedUrl || "styling-mock", { isStylingMode }],
+    queryFn: () => extractRecipe(submittedUrl, isStylingMode),
+    enabled: isStylingMode ? true : submittedUrl !== "",
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
 }
