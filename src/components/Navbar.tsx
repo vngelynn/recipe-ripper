@@ -4,8 +4,9 @@ export default function Navbar() {
       <div id='logo'>gathered pantry</div>
       <div className='flex items-center gap-7 sans-serif'>
         <a className='navlink'>Clip</a>
-        <a className='navlink'>Your Account</a>
-        <div id='avatar'>E</div>
+        <a className='navlink'>Your Pantry</a>
+        {/* TODO: dynamically display first name initial */}
+        <div id='avatar'>A</div>
       </div>
     </div>
   )
