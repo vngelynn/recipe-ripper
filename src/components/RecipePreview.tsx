@@ -55,7 +55,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         <h1 className='text-4xl mb-2 font-fraunces font-medium italic'>
           {name}
         </h1>
-        <p className='text-sm text-ink-soft sans'>
+        <p className='text-sm text-ink-soft font-sans-serif'>
           clipped from{" "}
           <span className='font-semibold text-ink'>
             {" "}
@@ -64,7 +64,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
           </span>
         </p>
       </div>
-      <div className='flex justify-center divide-x text-line sans border-b-[1.5px] border-dashed'>
+      <div className='flex justify-center divide-x text-line font-sans-serif border-b-[1.5px] border-dashed'>
         {/* TODO: investigate 3rd element of servings data response */}
         <RecipeStat label='servings' value={servings[0]} />
         <RecipeStat label='prepTime' value={prepTime} />
@@ -75,7 +75,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         {/* ingredients */}
         <div className='p-9 md:border-r text-line border-b-[0]'>
           <p
-            className='text-xs font-bold uppercase mb-4 text-[#59654A] sans'
+            className='text-xs font-bold uppercase mb-4 text-[#59654A] font-sans-serif'
             style={{
               letterSpacing: "0.08em",
             }}
@@ -87,7 +87,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
               <li
                 key={i}
                 onClick={() => toggleIngredient(i)}
-                className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line]'
+                className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line] font-serif'
               >
                 <span
                   className={`border-[1.5px] transition-colors ${
@@ -112,11 +112,10 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         {/* steps */}
         <div className='p-9'>
           <p
-            className='text-xs font-bold uppercase mb-4'
+            className='text-xs font-bold uppercase mb-4 font-sans-serif'
             style={{
               color: "#59654A",
               letterSpacing: "0.08em",
-              fontFamily: "Inter, sans-serif",
             }}
           >
             Steps
@@ -125,9 +124,9 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
             {instructions.map((step, i) => (
               <li
                 key={i}
-                className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink'
+                className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink font-serif'
               >
-                <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9] font-fraunces'>
+                <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9]'>
                   {i + 1}
                 </span>
                 {step}
@@ -137,7 +136,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         </div>
 
         {/* note band */}
-        <div className='md:col-span-2 mx-9 mb-9 rounded-xl px-6 py-5 text-sm italic bg-cream-deep text-ink-soft serif'>
+        <div className='md:col-span-2 mx-9 mb-9 rounded-xl px-6 py-5 text-sm italic bg-cream-deep text-ink-soft font-serif'>
           {/* TODO: */}
           add user notes here
         </div>
