@@ -18,7 +18,7 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
   }
 
   return (
-    <div className='max-w-2xl mx-auto px-10 pt-6 pb-20'>
+    <div className='max-w-2xl mx-auto px-10 pt-6 pb-20 text-center'>
       <h1 className='text-4xl mb-1.5 font-fraunces text-bold'>Add a Recipe</h1>
       <p className='text-[15px] mb-8 text-ink-soft font-serif'>
         Enter a recipe URL and we'll do the rest.

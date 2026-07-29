@@ -71,7 +71,7 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
         <RecipeStat label='cookTime' value={cookTime} />
         <RecipeStat label='totalTime' value={totalTime} />
       </div>
-      <div className='grid md:grid-cols-2'>
+      <div className='grid md:grid-cols-[1fr_2fr]'>
         {/* ingredients */}
         <div className='p-9 md:border-r text-line border-b-[0]'>
           <p

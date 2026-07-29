@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <div className='min-h-screen w-full bg-cream text-ink'>
       <Navbar />
-      <div className='max-w-3xl mx-auto px-10 pb-24'>
+      <div className='max-w-4xl mx-auto px-10 pb-24'>
         <a className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-sans-serif'>
           <ChevronLeft size={15} />
           Back
