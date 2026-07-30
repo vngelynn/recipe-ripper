@@ -2,9 +2,9 @@
 import { useState } from "react"
 import RecipeStat from "./RecipeStat"
 import type { Recipe } from "./types"
-import { Bookmark, Home } from "lucide-react"
+import { ChefHat } from "lucide-react"
 
-export default function RecipePreview({ recipe }: { recipe: Recipe }) {
+export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
   const [checked, setChecked] = useState(() => new Set())
   const {
     name,
@@ -34,24 +34,11 @@ export default function RecipePreview({ recipe }: { recipe: Recipe }) {
       }}
     >
       <div className='relative text-center px-10 pt-11 pb-9 bg-gradient-to-r bg-[160deg] from-sage-pale to-cream-deep'>
-        <button
-          // onClick={() => setSaved((s) => !s)}
-          className='absolute top-7 right-7 w-11 h-11 rounded-full flex items-center justify-center bg-card border-[1.5px] border-line shadow-[0_3px_8px_rgba(59,46,34,0.1)] transition-colors duration-200'
-          aria-label='Save recipe'
-        >
-          <Bookmark
-            size={18}
-            // className={`${saved ? "text-terra fill-terra" : "text-terra fill-none"} transition-all duration-200`}
-          />
-        </button>
-        <Home
+        <ChefHat
           size={34}
           strokeWidth={1.4}
           className='mx-auto mb-4 text-terra-deep'
         />
-        <div className='text-sm font-semibold mb-1 text-terra-deep italic font-fraunces'>
-          caution! PREVIEW ONLY, click save!
-        </div>
         <h1 className='text-4xl mb-2 font-fraunces font-medium italic'>
           {name}
         </h1>

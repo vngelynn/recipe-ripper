@@ -50,10 +50,10 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
           }}
         >
           {isDisabled
-            ? "Importing…"
+            ? "Extracting"
             : !isDisabled
-              ? "Imported ✓"
-              : "Import Recipe"}
+              ? "Extracted ✓"
+              : "Extract Recipe"}
         </button>
       </form>
     </div>

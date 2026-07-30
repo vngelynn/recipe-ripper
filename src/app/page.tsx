@@ -2,9 +2,10 @@
 import { useState } from "react"
 import { useExtractRecipe } from "../hooks/useExtractRecipe"
 import UrlForm from "../components/UrlForm"
-import RecipePreview from "@/components/RecipePreview"
+import RecipeDisplay from "@/components/RecipeDisplay"
 import Navbar from "@/components/Navbar"
 import { ChevronLeft } from "lucide-react"
+import PreviewNotice from "@/components/PreviewNotice"
 
 const IS_STYLING = true
 
@@ -41,9 +42,13 @@ export default function Home() {
         </a>
 
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={isWorking} />
-        {/* TODO: show loading crean if isWorking */}
+        {/* TODO: show loading screen if isWorking */}
         {/* TODO: handle display for errors */}
-        {recipe && <RecipePreview recipe={recipe} />}
+        {recipe && (
+          <>
+            <PreviewNotice /> <RecipeDisplay recipe={recipe} />
+          </>
+        )}
       </div>
     </div>
   )
