@@ -116,7 +116,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
                 <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9]'>
                   {i + 1}
                 </span>
-                {step}
+                {step.text}
               </li>
             ))}
           </ol>

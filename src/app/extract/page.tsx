@@ -1,6 +1,5 @@
 "use client"
 import { useState } from "react"
-import { useExtractRecipe } from "../../hooks/useExtractRecipe"
 import UrlForm from "../../components/UrlForm"
 import RecipeDisplay from "@/components/RecipeDisplay"
 import Navbar from "@/components/Navbar"
@@ -9,24 +8,43 @@ import PreviewNotice from "@/components/PreviewNotice"
 import Link from "next/link"
 
 export default function ExtractPage() {
-  const [submittedUrl, setSubmittedUrl] = useState<string>("")
+  const [recipe, setRecipe] = useState(null)
+  const [error, setError] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
 
-  const {
-    data: recipe,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useExtractRecipe(submittedUrl)
+  const extractRecipe = async (submittedUrl: string) => {
+    try {
+      setLoading(true)
+      const response = await fetch("/api/extract", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          url: submittedUrl,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      setRecipe(data.recipe)
+      setLoading(false)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+
+  if (error) {
+    // display error message
+    console.log(error)
+  }
 
   const handleCheckRecipe = (url: string) => {
-    setSubmittedUrl(url)
+    extractRecipe(url)
   }
-
-  if (isError) {
-    console.log("Query error occured: ", error.message)
-  }
-  const isWorking = isLoading || isFetching
 
   return (
     <div className='min-h-screen w-full bg-cream text-ink'>
@@ -40,7 +58,7 @@ export default function ExtractPage() {
           Back
         </Link>
 
-        <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={isWorking} />
+        <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
         {/* TODO: show loading screen if isWorking */}
         {/* TODO: handle display for errors */}
         {recipe && (
