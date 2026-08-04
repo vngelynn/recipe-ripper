@@ -8,10 +8,8 @@ import { ChevronLeft } from "lucide-react"
 import PreviewNotice from "@/components/PreviewNotice"
 import Link from "next/link"
 
-const IS_STYLING = true
-
 export default function ExtractPage() {
-  const [submittedUrl, setSubmittedUrl] = useState("")
+  const [submittedUrl, setSubmittedUrl] = useState<string>("")
 
   const {
     data: recipe,
@@ -19,10 +17,7 @@ export default function ExtractPage() {
     isFetching,
     isError,
     error,
-  } = useExtractRecipe({
-    submittedUrl: submittedUrl,
-    isStylingMode: IS_STYLING,
-  })
+  } = useExtractRecipe(submittedUrl)
 
   const handleCheckRecipe = (url: string) => {
     setSubmittedUrl(url)
