@@ -11,6 +11,7 @@ export default function ExtractPage() {
   const [recipe, setRecipe] = useState(null)
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
+  const [extracted, setExtracted] = useState<boolean>(false)
 
   const extractRecipe = async (submittedUrl: string) => {
     try {
@@ -31,6 +32,7 @@ export default function ExtractPage() {
 
       const data = await response.json()
       setRecipe(data.recipe)
+      setExtracted(true)
       setLoading(false)
     } catch (err) {
       setError(err.message)
@@ -59,7 +61,6 @@ export default function ExtractPage() {
         </Link>
 
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
-        {/* TODO: show loading screen if isWorking */}
         {/* TODO: handle display for errors */}
         {recipe && (
           <>
