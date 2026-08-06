@@ -49,11 +49,15 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
             cursor: isDisabled ? "default" : "pointer",
           }}
         >
+          {/* 
+          if recipeUrl is empty, show 'Extract Recipe'
+          if disabled show 'Extracting'
+           */}
           {isDisabled
             ? "Extracting"
-            : !isDisabled
-              ? "Extracted ✓"
-              : "Extract Recipe"}
+            : recipeUrl
+              ? "Extract Recipe"
+              : "Extracted"}
         </button>
       </form>
     </div>
