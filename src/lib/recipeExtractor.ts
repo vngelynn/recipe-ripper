@@ -1,6 +1,22 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
 
+function durationToMinutes(duration: string): number {
+  const hours = duration.match(/(\d+)H/)?.[1]
+  const minutes = duration.match(/(\d+)M/)?.[1]
+
+  return (Number(hours) || 0) * 60 + (Number(minutes) || 0)
+}
+
+// if > 1 min, call minutesToHourMinutes
+function minutesToHourMinutes(minutes: number) {
+  // 2
+
+  return
+}
+
+console.log("minutesToHourMinutes(90): ", minutesToHourMinutes(90))
+
 function findRecipe(data: unknown) {
   if (!data || typeof data !== "object") {
     return null
@@ -40,6 +56,70 @@ function findRecipe(data: unknown) {
   return null
 }
 
+function normalizeImage(image: unknown): string | null {
+  // String
+  if (typeof image === "string") {
+    return image
+  }
+
+  // Array
+  if (Array.isArray(image)) {
+    // Array of strings
+    const stringImage = image.find((item) => typeof item === "string")
+
+    if (stringImage) {
+      return stringImage
+    }
+
+    // Array of image objects
+    const imageObjects = image.filter(
+      (
+        item,
+      ): item is {
+        url?: string
+        width?: number
+        height?: number
+      } => typeof item === "object" && item !== null,
+    )
+
+    if (imageObjects.length === 0) {
+      return null
+    }
+
+    const smallestImage = imageObjects.reduce((smallest, current) => {
+      const smallestArea =
+        (smallest.width ?? Infinity) * (smallest.height ?? Infinity)
+
+      const currentArea =
+        (current.width ?? Infinity) * (current.height ?? Infinity)
+
+      return currentArea < smallestArea ? current : smallest
+    })
+
+    return smallestImage.url ?? null
+  }
+
+  return null
+}
+
+function normalizeServings(servings: unknown): string | null {
+  if (typeof servings === "string") {
+    return servings
+  }
+
+  if (typeof servings === "number") {
+    return String(servings)
+  }
+
+  if (Array.isArray(servings)) {
+    const firstString = servings.find((item) => typeof item === "string")
+
+    return firstString ?? null
+  }
+
+  return null
+}
+
 export async function extractRecipe(url: string) {
   const response = await axios.get(url)
 
@@ -69,12 +149,27 @@ export async function extractRecipe(url: string) {
         const {
           name,
           recipeIngredient: ingredients,
-          image,
-          recipeYield: servings,
+          image: rawImage,
+          // image,
+          recipeYield: rawServings,
           prepTime,
           cookTime,
           totalTime,
         } = recipe
+
+        const image = normalizeImage(rawImage)
+        const servings = normalizeServings(rawServings)
+
+        const prepMinutes = durationToMinutes(prepTime)
+        const totalMinutes = durationToMinutes(totalTime)
+
+        let normalizedCookTime = cookTime
+
+        if (cookTime === "PT0S" && prepTime && totalTime) {
+          const cookMinutes = Math.max(0, totalMinutes - prepMinutes)
+
+          normalizedCookTime = `PT${cookMinutes}M`
+        }
 
         return {
           name,
@@ -82,9 +177,9 @@ export async function extractRecipe(url: string) {
           instructions,
           image,
           servings,
-          prepTime,
-          cookTime,
-          totalTime,
+          prepTime: prepTime?.replace(/^PT/, ""),
+          cookTime: normalizedCookTime?.replace(/^PT/, ""),
+          totalTime: totalTime?.replace(/^PT/, ""),
         }
       }
     } catch (error) {

@@ -25,6 +25,8 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
     })
   }
 
+  console.log(recipe)
+
   return (
     <div
       className='rounded-2xl overflow-hidden bg-card'
@@ -33,7 +35,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
           "0 2px 0 rgba(59,46,34,0.05), 0 10px 28px rgba(59,46,34,0.09)",
       }}
     >
-      <div className='relative text-center px-10 pt-11 pb-9 bg-gradient-to-r bg-[160deg] from-sage-pale to-cream-deep'>
+      <div className='relative flex flex-col items-center justify-center text-center px-10 pt-11 pb-9 bg-gradient-to-r from-[#927c6d] via-amber-900/40 to-orange-100 '>
         <ChefHat
           size={34}
           strokeWidth={1.4}
@@ -42,6 +44,10 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
         <h1 className='text-4xl mb-2 font-fraunces font-medium italic'>
           {name}
         </h1>
+        <img
+          src={image}
+          className='w-[200px] h-[200px] object-cover rounded-[30px_50px_40px_60px] shadow-lg shadow-amber-900/20 sepia-[0.15] contrast-95'
+        />
         <p className='text-sm text-ink-soft font-sans-serif'>
           clipped from{" "}
           <span className='font-semibold text-ink'>
@@ -53,10 +59,10 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
       </div>
       <div className='flex justify-center divide-x text-line font-sans-serif border-b-[1.5px] border-dashed'>
         {/* TODO: investigate 3rd element of servings data response */}
-        <RecipeStat label='servings' value={servings[0]} />
-        <RecipeStat label='prepTime' value={prepTime} />
-        <RecipeStat label='cookTime' value={cookTime} />
-        <RecipeStat label='totalTime' value={totalTime} />
+        <RecipeStat label='servings' value={servings} />
+        <RecipeStat label='prepTime' value={prepTime.replace(/^PT/, "")} />
+        <RecipeStat label='cookTime' value={cookTime.replace(/^PT/, "")} />
+        <RecipeStat label='totalTime' value={totalTime.replace(/^PT/, "")} />
       </div>
       <div className='grid md:grid-cols-[1fr_2fr]'>
         {/* ingredients */}
