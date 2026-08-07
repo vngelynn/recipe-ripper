@@ -104,6 +104,7 @@ function normalizeImage(image: unknown): string | null {
 
 function normalizeServings(servings: unknown): string | null {
   if (typeof servings === "string") {
+    if (servings.includes("serving")) return parseInt(servings).toString()
     return servings
   }
 
