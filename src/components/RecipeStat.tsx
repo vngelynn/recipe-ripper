@@ -1,6 +1,6 @@
 interface StatProps {
   label: string
-  value: string | number | undefined | null
+  value: string | string[] | number | undefined | null
 }
 export default function RecipeStat({ label, value }: StatProps) {
   return (
