@@ -8,14 +8,16 @@ function durationToMinutes(duration: string): number {
   return (Number(hours) || 0) * 60 + (Number(minutes) || 0)
 }
 
-// if > 1 min, call minutesToHourMinutes
-function minutesToHourMinutes(minutes: number) {
-  // 2
+function formatMinutes(totalMinutes) {
+  const hours = Math.floor(totalMinutes / 60)
+  const minutes = totalMinutes % 60
 
-  return
+  if (hours >= 1) {
+    return `${hours} hr ${minutes} mins`
+  }
+
+  return `${minutes} mins`
 }
-
-console.log("minutesToHourMinutes(90): ", minutesToHourMinutes(90))
 
 function findRecipe(data: unknown) {
   if (!data || typeof data !== "object") {
@@ -151,7 +153,6 @@ export async function extractRecipe(url: string) {
           name,
           recipeIngredient: ingredients,
           image: rawImage,
-          // image,
           recipeYield: rawServings,
           prepTime,
           cookTime,
@@ -169,7 +170,7 @@ export async function extractRecipe(url: string) {
         if (cookTime === "PT0S" && prepTime && totalTime) {
           const cookMinutes = Math.max(0, totalMinutes - prepMinutes)
 
-          normalizedCookTime = `PT${cookMinutes}M`
+          normalizedCookTime = formatMinutes(cookMinutes)
         }
 
         return {
@@ -179,7 +180,7 @@ export async function extractRecipe(url: string) {
           image,
           servings,
           prepTime: prepTime?.replace(/^PT/, ""),
-          cookTime: normalizedCookTime?.replace(/^PT/, ""),
+          cookTime: normalizedCookTime,
           totalTime: totalTime?.replace(/^PT/, ""),
         }
       }
