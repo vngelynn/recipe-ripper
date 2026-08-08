@@ -54,12 +54,15 @@ export default function ExtractPage() {
       <div className='max-w-4xl mx-auto px-10 pb-24'>
         <Link
           href='/'
-          className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-sans-serif'
+          className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-inter'
         >
           <ChevronLeft size={15} />
           Back
         </Link>
 
+        <div className='text-[11.5px] font-bold uppercase text-center mb-3 text-terra-deep font-inter tracking-[0.12em]'>
+          Paste any link, keep only what matters
+        </div>
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
         {/* TODO: handle display for errors */}
         {recipe && (

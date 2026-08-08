@@ -20,7 +20,7 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
   return (
     <div className='max-w-2xl mx-auto px-10 pt-6 pb-20 text-center'>
       <h1 className='text-4xl mb-1.5 font-fraunces text-bold'>Add a Recipe</h1>
-      <p className='text-[15px] mb-8 text-ink-soft font-serif'>
+      <p className='text-[15px] mb-8 text-ink-soft font-Lora'>
         Enter a recipe URL and we'll do the rest.
       </p>
 
@@ -37,13 +37,13 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
           onChange={(e) => setRecipeUrl(e.target.value)}
           placeholder='https://example.com.recipe'
           disabled={isDisabled}
-          className='flex-1 py-3.5 bg-transparent outline-none text-[14.5px] text-ink font-sans-serif'
+          className='flex-1 py-3.5 bg-transparent outline-none text-[14.5px] text-ink font-inter'
         />
 
         <button
           type='submit'
           disabled={isDisabled}
-          className='whitespace-nowrap px-6 rounded-[9px] font-semibold text-[14.5px] transition-transform active:scale-[0.98] bg-terra font-sans-serif text-[#FBF3E9]'
+          className='whitespace-nowrap px-6 rounded-[9px] font-semibold text-[14.5px] transition-transform active:scale-[0.98] bg-terra font-inter text-[#FBF3E9]'
           style={{
             opacity: isDisabled ? 0.7 : 1,
             cursor: isDisabled ? "default" : "pointer",
