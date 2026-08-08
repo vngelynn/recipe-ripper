@@ -1,23 +1,6 @@
 import axios from "axios"
 import * as cheerio from "cheerio"
-
-function durationToMinutes(duration: string): number {
-  const hours = duration.match(/(\d+)H/)?.[1]
-  const minutes = duration.match(/(\d+)M/)?.[1]
-
-  return (Number(hours) || 0) * 60 + (Number(minutes) || 0)
-}
-
-function formatMinutes(totalMinutes) {
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
-
-  if (hours >= 1) {
-    return `${hours} hr ${minutes} mins`
-  }
-
-  return `${minutes} mins`
-}
+import { getMinutesNumber, formatDuration } from "@/utils/durationFormatters"
 
 function findRecipe(data: unknown) {
   if (!data || typeof data !== "object") {
@@ -59,21 +42,17 @@ function findRecipe(data: unknown) {
 }
 
 function normalizeImage(image: unknown): string | null {
-  // String
   if (typeof image === "string") {
     return image
   }
 
-  // Array
   if (Array.isArray(image)) {
-    // Array of strings
     const stringImage = image.find((item) => typeof item === "string")
 
     if (stringImage) {
       return stringImage
     }
 
-    // Array of image objects
     const imageObjects = image.filter(
       (
         item,
@@ -162,15 +141,13 @@ export async function extractRecipe(url: string) {
         const image = normalizeImage(rawImage)
         const servings = normalizeServings(rawServings)
 
-        const prepMinutes = durationToMinutes(prepTime)
-        const totalMinutes = durationToMinutes(totalTime)
+        const prepMinutes = getMinutesNumber(prepTime)
+        const totalMinutes = getMinutesNumber(totalTime)
 
-        let normalizedCookTime = cookTime
+        let normalizedCookTime: string | number = cookTime
 
         if (cookTime === "PT0S" && prepTime && totalTime) {
-          const cookMinutes = Math.max(0, totalMinutes - prepMinutes)
-
-          normalizedCookTime = formatMinutes(cookMinutes)
+          normalizedCookTime = Math.max(0, totalMinutes - prepMinutes)
         }
 
         return {
@@ -179,9 +156,9 @@ export async function extractRecipe(url: string) {
           instructions,
           image,
           servings,
-          prepTime: prepTime?.replace(/^PT/, ""),
-          cookTime: normalizedCookTime,
-          totalTime: totalTime?.replace(/^PT/, ""),
+          prepTime: formatDuration(prepTime),
+          cookTime: formatDuration(normalizedCookTime),
+          totalTime: formatDuration(totalTime),
         }
       }
     } catch (error) {

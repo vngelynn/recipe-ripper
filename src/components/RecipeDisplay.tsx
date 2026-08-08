@@ -25,8 +25,6 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
     })
   }
 
-  console.log(recipe)
-
   return (
     <div
       className='rounded-2xl overflow-hidden bg-card'
