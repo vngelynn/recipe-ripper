@@ -61,7 +61,7 @@ export default function ExtractPage() {
         </Link>
 
         <div className='text-[11.5px] font-bold uppercase text-center mb-3 text-terra-deep font-inter tracking-[0.12em]'>
-          Paste any link, keep only what matters
+          Paste a link, keep only what matters
         </div>
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
         {/* TODO: handle display for errors */}
