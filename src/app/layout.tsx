@@ -1,7 +1,7 @@
 import "./globals.css"
 import type { Metadata } from "next"
 import Providers from "./providers"
-import { Lora, Inter, Fraunces } from "next/font/google"
+import { Lora, Inter, Fraunces, Gaegu } from "next/font/google"
 
 const lora = Lora({
   display: "swap",
@@ -24,6 +24,14 @@ const fraunces = Fraunces({
   style: ["normal", "italic"],
 })
 
+const gaegu = Gaegu({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-gaegu",
+  weight: "400",
+  style: "normal",
+})
+
 export const metadata: Metadata = {
   title: "gathered pantry",
   description: "One place to save favorite simplified recipes",
@@ -37,7 +45,7 @@ export default function RootLayout({
   return (
     <html
       lang='en'
-      className={`${lora.variable} ${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${lora.variable} ${inter.variable} ${fraunces.variable} ${gaegu.variable} h-full antialiased`}
     >
       <body className='min-h-full flex flex-col'>
         <Providers>{children}</Providers>

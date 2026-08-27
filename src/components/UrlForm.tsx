@@ -22,8 +22,8 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
       <h1 className='text-4xl mb-1.5 font-fraunces text-bold'>
         Skim a new recipe
       </h1>
-      <p className='text-[15px] mb-8 text-ink-soft font-Lora'>
-        Enter a recipe URL and we'll do the rest.
+      <p className='text-[15px] mb-8 text-ink-soft font-lora'>
+        Enter a recipe URL and let's get cooking.
       </p>
       <div
         className='rounded-2xl p-2 mb-4 bg-card'

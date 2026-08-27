@@ -77,7 +77,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
               <li
                 key={i}
                 onClick={() => toggleIngredient(i)}
-                className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line] font-Lora'
+                className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line] font-lora'
               >
                 <span
                   className={`border-[1.5px] transition-colors ${
@@ -114,7 +114,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
             {instructions.map((step, i) => (
               <li
                 key={i}
-                className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink font-Lora'
+                className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink font-lora'
               >
                 <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9]'>
                   {i + 1}
@@ -126,7 +126,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
         </div>
 
         {/* note band */}
-        <div className='md:col-span-2 mx-9 mb-9 rounded-xl px-6 py-5 text-sm italic bg-cream-deep text-ink-soft font-Lora'>
+        <div className='md:col-span-2 mx-9 mb-9 rounded-xl px-6 py-5 text-sm italic bg-cream-deep text-ink-soft font-lora'>
           {/* TODO: */}
           add user notes here
         </div>

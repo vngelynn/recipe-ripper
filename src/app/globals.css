@@ -20,7 +20,8 @@
   --color-line: #DECBA9;
   --color-line-strong: #CBB289;
   --font-inter: "Inter", sans-serif;
-  --font-Lora: "Lora", serif;
+  --font-gaegu: "Gaegu", sans-serif;
+  --font-lora: "Lora", serif;
   --font-fraunces: "Fraunces", serif;
 }
 
@@ -39,10 +40,14 @@ body {
     @apply text-sm font-medium cursor-pointer text-[#7E6B57] hover:text-[#59654A] transition-colors;
   }
 
-  #logo {
+  .logo {
     font-family: "Lora, serif";
     font-weight: 800;
     font-size: 22px; 
+  }
+
+  .logo-hero { 
+    font-size: 18px;
   }
 
   #avatar {
