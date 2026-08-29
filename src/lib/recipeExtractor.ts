@@ -151,6 +151,7 @@ export async function extractRecipe(url: string) {
         }
 
         return {
+          url,
           name,
           ingredients,
           instructions,

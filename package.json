@@ -1,17 +1,23 @@
 {
   "name": "recipe-ripper",
+  "type": "module",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "prisma skills sync || exit 0",
+    "contract:emit": "prisma contract emit"
   },
   "dependencies": {
+    "@prisma/client": "^7.10.0",
+    "@prisma/orm-postgres": "^8.0.0-rc.8",
     "@tanstack/react-query": "^5.101.2",
     "axios": "^1.18.1",
     "cheerio": "^1.2.0",
+    "dotenv": "^17.4.2",
     "lucide-react": "^1.25.0",
     "next": "16.2.10",
     "postcss": "^8.5.25",
@@ -19,6 +25,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@prisma/cli-engine": "^0.2.3",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -26,6 +33,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "prisma": "^8.0.0-rc.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
