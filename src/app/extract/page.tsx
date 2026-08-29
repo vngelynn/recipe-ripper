@@ -11,6 +11,7 @@ export default function ExtractPage() {
   const [recipe, setRecipe] = useState(null)
   const [error, setError] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
+  const [extracted, setExtracted] = useState<boolean>(false)
 
   const extractRecipe = async (submittedUrl: string) => {
     try {
@@ -31,6 +32,7 @@ export default function ExtractPage() {
 
       const data = await response.json()
       setRecipe(data.recipe)
+      setExtracted(true)
       setLoading(false)
     } catch (err) {
       setError(err.message)
@@ -52,14 +54,16 @@ export default function ExtractPage() {
       <div className='max-w-4xl mx-auto px-10 pb-24'>
         <Link
           href='/'
-          className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-sans-serif'
+          className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-inter'
         >
           <ChevronLeft size={15} />
           Back
         </Link>
 
+        <div className='text-[11.5px] font-bold uppercase text-center mb-3 text-terra-deep font-inter tracking-[0.12em]'>
+          Paste a link, keep only what matters
+        </div>
         <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
-        {/* TODO: show loading screen if isWorking */}
         {/* TODO: handle display for errors */}
         {recipe && (
           <>
