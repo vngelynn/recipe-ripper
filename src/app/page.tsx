@@ -2,6 +2,11 @@ import Navbar from "@/components/Navbar"
 import React from "react"
 import Link from "next/link"
 
+interface EyebrowProps {
+  children: React.ReactNode
+  center?: boolean // The '?' means it is optional
+}
+
 const COLORS = {
   cream: "#F3E9D9",
   creamDeep: "#ECDFC6",
@@ -38,7 +43,7 @@ function Flourish() {
   )
 }
 
-function Eyebrow({ children, center = false }) {
+function Eyebrow({ children, center = false }: EyebrowProps) {
   return (
     <div
       className={`flex items-center gap-2 text-[15px] font-semibold font-gaegu uppercase tracking-[0.14em] text-terra-deep ${center ? "justify-center" : ""}`}
@@ -90,26 +95,28 @@ export default function Home() {
           ))}
         </div>
         <div className='flex gap-3'>
-          <button
+          <Link
             className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold'
             style={{
               border: `1.5px solid ${COLORS.lineStrong}`,
               color: COLORS.ink,
               fontFamily: "Inter, sans-serif",
             }}
+            href='/login'
           >
             Log in
-          </button>
-          <button
+          </Link>
+          <Link
             className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold'
             style={{
               background: COLORS.terra,
               color: "#FBF3E9",
               fontFamily: "Inter, sans-serif",
             }}
+            href='/signup'
           >
             Sign up
-          </button>
+          </Link>
         </div>
       </nav>
       {/* IMPLEMENT LOGGED IN STATUS, IF LOGGED IN DISPLAY: 
@@ -528,7 +535,7 @@ export default function Home() {
               text: "Paste a link from most websites or food blogs.",
             },
             {
-              title: "Let us do the prep work",
+              title: "'Lettuce' do the prep work",
               text: "We slice out the ads and chop down long stories to serve you just the essential ingredients and steps.",
             },
             {
