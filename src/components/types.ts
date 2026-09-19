@@ -7,7 +7,7 @@ interface HowToStep {
 export interface Recipe {
   name: string
   ingredients: string[]
-  instructions: HowToStep[]
+  instructions: string[]
   image: string
   servings: string[]
   prepTime: string

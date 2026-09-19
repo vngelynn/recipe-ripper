@@ -17,7 +17,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
     totalTime,
   } = recipe
 
-  const toggleIngredient = (i) => {
+  const toggleIngredient = (i: number) => {
     setChecked((prev) => {
       const next = new Set(prev)
       next.has(i) ? next.delete(i) : next.add(i)
