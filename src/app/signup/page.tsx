@@ -3,6 +3,7 @@
 import React, { useState } from "react"
 import { Eye, EyeOff, Check } from "lucide-react"
 import { signIn } from "next-auth/react"
+import Link from "next/link"
 
 // remove colors when updating svg images
 const COLORS = {
@@ -193,7 +194,9 @@ export default function SignUpPage() {
       />
 
       <div className='w-full max-w-[420px] text-center'>
-        <div className='logo font-semibold text-2xl mb-7'>gathered pantry</div>
+        <Link className='logo font-semibold text-2xl mb-7' href='/'>
+          gathered pantry
+        </Link>
 
         <KitchenIllustration />
 

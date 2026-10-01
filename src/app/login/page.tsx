@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
+import Link from "next/link"
 
 type FieldProps = {
   label: string
@@ -169,7 +170,9 @@ export default function LoginPage() {
       {" "}
       <div className='w-full max-w-[420px] text-center'>
         {" "}
-        <div className='logo'>gathered pantry</div>
+        <Link className='logo' href='/'>
+          gathered pantry
+        </Link>
         <KitchenIllustration />
         <h1 className='mb-2 font-fraunces text-[32px] font-medium italic'>
           Welcome back
