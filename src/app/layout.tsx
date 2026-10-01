@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import Providers from "./providers"
 import { Lora, Inter, Fraunces, Gaegu } from "next/font/google"
+import Navbar from "../components/Navbar"
 
 const lora = Lora({
   display: "swap",
@@ -47,8 +48,11 @@ export default function RootLayout({
       lang='en'
       className={`${lora.variable} ${inter.variable} ${fraunces.variable} ${gaegu.variable} h-full antialiased`}
     >
-      <body className='min-h-full flex flex-col'>
-        <Providers>{children}</Providers>
+      <body className='min-h-full bg-cream flex flex-col'>
+        <Providers>
+          <Navbar />
+          {children}
+        </Providers>
       </body>
     </html>
   )

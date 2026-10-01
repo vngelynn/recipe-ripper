@@ -9,6 +9,7 @@
   --color-cream: #F3E9D9;
   --color-cream-deep: #ECDFC6;
   --color-card: #FBF6EB;
+  --color-light: #FBF3E9;
   --color-ink: #3B2E22;
   --color-ink-soft: #7E6B57;
   --color-ink-faint: #AC9A81;
@@ -17,7 +18,7 @@
   --color-terra: #AD6A4E;
   --color-terra-deep: #8A5039;
   --color-terra-pale: #F1DED2;
-  --gold: #C99A4E;
+  --color-gold: #C99A4E;
   --color-line: #DECBA9;
   --color-line-strong: #CBB289;
   --font-inter: "Inter", sans-serif;
@@ -26,15 +27,8 @@
   --font-fraunces: "Fraunces", serif;
 }
 
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
 body {
-  background: var(--background);
+  background: var(--color-cream);
   color: var(--foreground);
 
   .navlink {

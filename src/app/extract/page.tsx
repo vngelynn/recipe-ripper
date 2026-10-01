@@ -2,7 +2,6 @@
 import { useState } from "react"
 import UrlForm from "../../components/UrlForm"
 import RecipeDisplay from "@/components/RecipeDisplay"
-import Navbar from "@/components/Navbar"
 import { ChevronLeft } from "lucide-react"
 import PreviewNotice from "@/components/PreviewNotice"
 import Link from "next/link"
@@ -54,7 +53,6 @@ export default function ExtractPage() {
 
   return (
     <div className='min-h-screen w-full bg-cream text-ink'>
-      <Navbar />
       <div className='max-w-4xl mx-auto px-10 pb-24'>
         <Link
           href='/'

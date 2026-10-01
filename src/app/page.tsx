@@ -1,10 +1,9 @@
-import Navbar from "@/components/Navbar"
 import React from "react"
 import Link from "next/link"
 
 interface EyebrowProps {
   children: React.ReactNode
-  center?: boolean // The '?' means it is optional
+  center?: boolean
 }
 
 const COLORS = {
@@ -78,49 +77,6 @@ const RECIPE_ROWS = [
 export default function Home() {
   return (
     <div className='min-h-screen w-full bg-cream text-ink'>
-      <nav className='max-w-6xl mx-auto flex items-center justify-between px-10 py-7'>
-        <div className='logo'>gathered pantry</div>
-        <div
-          className='hidden md:flex items-center gap-8'
-          style={{ fontFamily: "Inter, sans-serif" }}
-        >
-          {["How it works", "Features", "Browse recipes", "About"].map((l) => (
-            <a
-              key={l}
-              className='text-[14.5px] font-medium cursor-pointer'
-              style={{ color: COLORS.inkSoft }}
-            >
-              {l}
-            </a>
-          ))}
-        </div>
-        <div className='flex gap-3'>
-          <Link
-            className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold'
-            style={{
-              border: `1.5px solid ${COLORS.lineStrong}`,
-              color: COLORS.ink,
-              fontFamily: "Inter, sans-serif",
-            }}
-            href='/login'
-          >
-            Log in
-          </Link>
-          <Link
-            className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold'
-            style={{
-              background: COLORS.terra,
-              color: "#FBF3E9",
-              fontFamily: "Inter, sans-serif",
-            }}
-            href='/signup'
-          >
-            Sign up
-          </Link>
-        </div>
-      </nav>
-      {/* IMPLEMENT LOGGED IN STATUS, IF LOGGED IN DISPLAY: 
-      <Navbar /> */}
       <div className='max-w-6xl mx-auto px-10 pt-6 grid md:grid-cols-2 gap-10 items-center'>
         <div>
           <div className='mb-3.5 font-gaegu'>
@@ -149,23 +105,17 @@ export default function Home() {
             organize your favorite dishes in one cozy place.
           </p>
           <div className='flex gap-3.5 flex-wrap mb-6'>
-            <button
-              className='px-6 py-3.5 rounded-[9px] text-[15px] font-semibold'
-              style={{
-                background: COLORS.terra,
-                color: "#FBF3E9",
-                fontFamily: "Inter, sans-serif",
-              }}
+            <Link
+              className='px-6 py-3.5 rounded-[9px] text-[15px] font-semibold bg-terra text-light hover:bg-terra-deep'
+              href='/signup'
             >
               Get started — it's free
-            </button>
+            </Link>
             <Link
-              className='px-6 py-3.5 rounded-[9px] text-[15px] font-semibold'
-              style={{
-                border: `1.5px solid ${COLORS.lineStrong}`,
-                color: COLORS.ink,
-                fontFamily: "Inter, sans-serif",
-              }}
+              className='px-6 py-3.5 rounded-[9px] text-[15px] text-ink font-semibold border-[1.5px]
+             border-line-strong 
+             hover:border-terra hover:text-terra-deep
+             '
               href='/extract'
             >
               See how it works
