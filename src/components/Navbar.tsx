@@ -24,7 +24,9 @@ export default async function Navbar() {
 
   return (
     <nav className='w-full max-w-5xl mx-auto flex items-center justify-between px-10 py-7'>
-      <div className='logo'>gathered pantry</div>
+      <Link className='logo' href='/'>
+        gathered pantry
+      </Link>
 
       {isLoggedIn ? (
         <div className='flex items-center gap-7 font-inter'>
@@ -63,7 +65,7 @@ export default async function Navbar() {
               className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold border-[1.5px]
                 border-line-strong text-ink bg-transparent
                 transition-all duration-300 ease-out
-                hover:bg-terra-pale hover:border-terra hover:text-terra-deep
+               hover:bg-cream-deep
                 hover:-translate-y-px hover:shadow-[0_6px_16px_rgba(173,106,78,0.18)]
                 font-inter'
             >
@@ -73,9 +75,9 @@ export default async function Navbar() {
             <Link
               href='/signup'
               className='px-5 py-2.5 rounded-[9px] text-[13.5px] font-semibold border-[1.5px]
-                border-[#CBB289] text-[#3B2E22] bg-transparent
+                border-line-strong text-ink 
                 transition-all duration-300 ease-out
-                hover:border-terra hover:text-terra-deep
+               hover:bg-cream-deep
                 hover:-translate-y-px hover:shadow-[0_6px_16px_rgba(173,106,78,0.18)]
                 font-inter'
             >

@@ -15,6 +15,7 @@
   --color-ink-faint: #AC9A81;
   --color-sage-pale: #E4E9DA;
   --color-sage-pale-deep: #DCE3CD;
+  --color-sage-deep: #59654A;
   --color-terra: #AD6A4E;
   --color-terra-deep: #8A5039;
   --color-terra-pale: #F1DED2;
@@ -32,7 +33,7 @@ body {
   color: var(--foreground);
 
   .navlink {
-    @apply text-sm font-medium cursor-pointer text-[#7E6B57] hover:text-[#59654A] transition-colors;
+    @apply text-sm font-medium cursor-pointer text-ink-soft hover:text-sage-deep transition-colors;
   }
 
   .logo {
@@ -41,12 +42,8 @@ body {
     font-size: 22px; 
   }
 
-  .logo-hero { 
-    font-size: 18px;
-  }
-
   #avatar {
-    @apply w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold bg-sage-pale text-[#59654A] font-fraunces;
+    @apply w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold bg-sage-pale text-sage-deep font-fraunces;
   }
 
 }

@@ -48,10 +48,10 @@ export default function RootLayout({
       lang='en'
       className={`${lora.variable} ${inter.variable} ${fraunces.variable} ${gaegu.variable} h-full antialiased`}
     >
-      <body className='min-h-full bg-cream flex flex-col'>
+      <body className='flex min-h-screen flex-col bg-cream'>
         <Providers>
           <Navbar />
-          {children}
+          <main className='flex flex-1 flex-col'>{children}</main>
         </Providers>
       </body>
     </html>
