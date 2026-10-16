@@ -1,30 +1,50 @@
 "use client"
-import React, { useState } from "react"
+
+import { useState } from "react"
 import { Link2, Scissors } from "lucide-react"
+
 interface UrlFormProps {
   onUrlSubmit: (url: string) => void
   isDisabled: boolean
+  isExtracted: boolean
 }
 
-export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
+export default function UrlForm({
+  onUrlSubmit,
+  isDisabled,
+  isExtracted,
+}: UrlFormProps) {
   const [recipeUrl, setRecipeUrl] = useState("")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (!recipeUrl.trim()) return
 
-    onUrlSubmit(recipeUrl)
+    const trimmedUrl = recipeUrl.trim()
+
+    if (!trimmedUrl || isDisabled) return
+
+    onUrlSubmit(trimmedUrl)
     setRecipeUrl("")
   }
+
+  const buttonText = isDisabled
+    ? "Skimming..."
+    : recipeUrl.trim()
+      ? "Skim"
+      : isExtracted
+        ? "Skimmed!"
+        : "Skim"
 
   return (
     <div className='max-w-2xl mx-auto px-10 pt-6 pb-20 text-center'>
       <h1 className='text-4xl mb-1.5 font-fraunces text-bold'>
         Skim a new recipe
       </h1>
+
       <p className='text-[15px] mb-8 text-ink-soft font-lora'>
         Enter a recipe URL and let's get cooking.
       </p>
+
       <div
         className='rounded-2xl p-2 mb-4 bg-card'
         style={{
@@ -36,18 +56,22 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
           <p className='text-[12px] font-bold uppercase mb-2.5 text-ink-soft tracking-[0.08em] font-inter text-left'>
             Recipe URL
           </p>
+
           <form className='flex gap-2.5' onSubmit={handleSubmit}>
             <div
-              className={`flex-1 flex items-center gap-2.5 bg-white rounded-[10px] px-4 border-solid ${isDisabled ? "border-terra" : "border-line"}`}
+              className={`flex-1 flex items-center gap-2.5 bg-white rounded-[10px] px-4 border-solid ${
+                isDisabled ? "border-terra" : "border-line"
+              }`}
               style={{ borderWidth: "1.5px" }}
             >
               <Link2 size={16} className='flex-shrink-0 text-ink-faint' />
+
               <input
                 id='urlField'
-                type='recipeUrl'
+                type='url'
                 value={recipeUrl}
                 onChange={(e) => setRecipeUrl(e.target.value)}
-                placeholder='https://example.com.recipe'
+                placeholder='https://example.com/recipe'
                 disabled={isDisabled}
                 className='flex-1 py-3.5 bg-transparent outline-none text-[14.5px] text-ink font-inter'
               />
@@ -55,18 +79,18 @@ export default function UrlForm({ onUrlSubmit, isDisabled }: UrlFormProps) {
 
             <button
               type='submit'
-              disabled={isDisabled}
-              className='whitespace-nowrap flex items-center gap-2 px-6 rounded-[9px] font-semibold text-[14.5px] transition-transform active:scale-[0.98] bg-terra font-inter text-[#FBF3E9]'
+              disabled={isDisabled || !recipeUrl.trim()}
+              className='whitespace-nowrap flex items-center gap-2 px-6 rounded-[9px] font-semibold text-[14.5px] transition-transform active:scale-[0.98] bg-terra font-inter text-[#FBF3E9] disabled:opacity-70 disabled:cursor-not-allowed'
               style={{
-                opacity: isDisabled ? 0.7 : 1,
-                cursor: isDisabled ? "default" : "pointer",
+                cursor:
+                  isDisabled || !recipeUrl.trim() ? "not-allowed" : "pointer",
               }}
             >
               <Scissors size={15} />
-              {/* TODO: fix display text logic, showing skimmed at first look */}
-              {isDisabled ? "Skimming" : recipeUrl ? "Skim Recipe" : "Skimmed"}
+              {buttonText}
             </button>
           </form>
+
           <p className='text-center text-xs mt-4 font-ink-faint font-inter'>
             Works with most recipe blogs, food magazines, and cooking sites.
           </p>

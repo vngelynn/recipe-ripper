@@ -1,20 +1,26 @@
 "use client"
+
 import { useState } from "react"
-import UrlForm from "../../components/UrlForm"
-import RecipeDisplay from "@/components/RecipeDisplay"
-import { ChevronLeft } from "lucide-react"
-import PreviewNotice from "@/components/PreviewNotice"
 import Link from "next/link"
+import { ChevronLeft } from "lucide-react"
+
+import UrlForm from "@/components/UrlForm"
+import RecipeDisplay from "@/components/RecipeDisplay"
+import PreviewNotice from "@/components/PreviewNotice"
 
 export default function ExtractPage() {
   const [recipe, setRecipe] = useState(null)
-  const [error, setError] = useState<string>("")
-  const [loading, setLoading] = useState<boolean>(false)
-  const [extracted, setExtracted] = useState<boolean>(false)
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [extracted, setExtracted] = useState(false)
 
   const extractRecipe = async (submittedUrl: string) => {
+    setLoading(true)
+    setExtracted(false)
+    setError("")
+    setRecipe(null)
+
     try {
-      setLoading(true)
       const response = await fetch("/api/extract", {
         method: "POST",
         headers: {
@@ -30,25 +36,22 @@ export default function ExtractPage() {
       }
 
       const data = await response.json()
+
+      if (!data.recipe) {
+        throw new Error("No recipe could be extracted from this URL.")
+      }
+
       setRecipe(data.recipe)
       setExtracted(true)
-      setLoading(false)
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message)
-      } else {
-        setError(String(error))
-      }
+      setError(error instanceof Error ? error.message : String(error))
+    } finally {
+      setLoading(false)
     }
   }
 
-  if (error) {
-    // display error message
-    console.log(error)
-  }
-
   const handleCheckRecipe = (url: string) => {
-    extractRecipe(url)
+    return extractRecipe(url)
   }
 
   return (
@@ -65,11 +68,23 @@ export default function ExtractPage() {
         <div className='text-[11.5px] font-bold uppercase text-center mb-3 text-terra-deep font-inter tracking-[0.12em]'>
           Paste a link, keep only what matters
         </div>
-        <UrlForm onUrlSubmit={handleCheckRecipe} isDisabled={loading} />
-        {/* TODO: handle display for errors */}
+
+        <UrlForm
+          onUrlSubmit={handleCheckRecipe}
+          isDisabled={loading}
+          isExtracted={extracted}
+        />
+
+        {error && (
+          <p className='mt-4 text-sm text-red-700 text-center' role='alert'>
+            {error}
+          </p>
+        )}
+
         {recipe && (
           <>
-            <PreviewNotice /> <RecipeDisplay recipe={recipe} />
+            <PreviewNotice />
+            <RecipeDisplay recipe={recipe} />
           </>
         )}
       </div>
