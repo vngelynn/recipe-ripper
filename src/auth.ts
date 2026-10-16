@@ -62,12 +62,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
   callbacks: {
     async signIn({ user, account }) {
-      console.log("[signIn]", {
-        provider: account?.provider,
-        email: user.email,
-        userId: user.id,
-      })
-
       if (account?.provider === "google") {
         if (!user.email) {
           return false
@@ -77,15 +71,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const existingUser = await db.orm.public.User.first({ email })
 
-        console.log("[signIn] Existing user:", !!existingUser)
-
         if (!existingUser) {
           await db.orm.public.User.create({
             email,
             passwordHash: null,
           })
-
-          console.log("[signIn] User created")
         }
       }
 
