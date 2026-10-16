@@ -431,14 +431,7 @@ export default function Home() {
                 </svg>
               </div>
             ))}
-            <button
-              className='w-full mt-3.5 py-2.5 rounded-[9px] text-[13px] font-semibold flex items-center justify-center gap-2'
-              style={{
-                background: COLORS.terra,
-                color: "#FBF3E9",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
+            <button className='w-full mt-3.5 py-2.5 rounded-[9px] text-[13px] font-semibold flex items-center justify-center gap-2 text-light bg-terra font-inter'>
               <svg
                 width='13'
                 height='13'
@@ -759,19 +752,11 @@ export default function Home() {
             className='mb-6 max-w-md text-[15.5px] leading-relaxed'
             style={{ color: COLORS.inkSoft }}
           >
-            From weeknight dinners to family favorites,{" "}
-            <span className='logo logo-hero'>gathered pantry</span> keeps your
-            recipes simple, organized, and always within reach.
+            From weeknight dinners to family favorites, keep your recipes
+            simple, organized, and always within reach.
           </p>
           <div className='flex gap-3.5 flex-wrap mb-4'>
-            <button
-              className='px-6 py-3.5 rounded-[9px] text-[15px] font-semibold'
-              style={{
-                background: COLORS.terra,
-                color: "#FBF3E9",
-                fontFamily: "Inter, sans-serif",
-              }}
-            >
+            <button className='px-6 py-3.5 rounded-[9px] text-[15px] font-semibold bg-terra text-light font-inter hover:bg-terra-deep'>
               Create your free account
             </button>
             <button
