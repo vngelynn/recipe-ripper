@@ -38,7 +38,6 @@ export default function SignUpPage() {
     e.preventDefault()
     // TODO: wire up to your real auth call, e.g.
     // await signUp({ name, email, password });
-    console.log("sign up", { name, email, password })
   }
 
   return (

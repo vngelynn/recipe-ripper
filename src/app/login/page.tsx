@@ -15,8 +15,6 @@ export default function LoginPage() {
 
     // TODO: Connect to your credentials authentication.
     // await signIn("credentials", { email, password });
-
-    console.log("log in", { email, password })
   }
 
   return (
