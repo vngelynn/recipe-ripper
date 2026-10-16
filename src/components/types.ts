@@ -5,6 +5,7 @@ interface HowToStep {
   url: string
 }
 export interface Recipe {
+  url: string
   name: string
   ingredients: string[]
   instructions: string[]

@@ -11,6 +11,31 @@ type RecipeInstruction =
       itemListElement?: RecipeInstruction[]
     }
 
+const cleanIngredient = (ingredient: string) => {
+  return (
+    ingredient
+      // Decode HTML entities if they occur in ingredient text.
+      .replace(/&amp;/g, "&")
+      .replace(/&nbsp;/g, " ")
+
+      // Remove whitespace immediately inside parentheses.
+      .replace(/\(\s+/g, "(")
+      .replace(/\s+\)/g, ")")
+
+      // Remove stray commas immediately inside parentheses.
+      .replace(/\(\s*,\s*/g, "(")
+      .replace(/\s*,\s*\)/g, ")")
+
+      // Collapse redundant double parentheses when the
+      // inner content contains no other parentheses.
+      .replace(/\(\(([^()]*)\)\)/g, "($1)")
+
+      // Normalize remaining whitespace.
+      .replace(/\s+/g, " ")
+      .trim()
+  )
+}
+
 const normalizeInstructions = (instructions: RecipeInstruction[]): string[] => {
   return instructions.flatMap((step) => {
     if (typeof step === "string") {
@@ -151,7 +176,7 @@ export async function extractRecipe(url: string) {
       if (recipe) {
         const {
           name,
-          recipeIngredient: ingredients,
+          recipeIngredient: rawIngredients,
           recipeInstructions: rawInstructions,
           image: rawImage,
           recipeYield: rawServings,
@@ -163,6 +188,9 @@ export async function extractRecipe(url: string) {
         const image = normalizeImage(rawImage)
         const servings = normalizeServings(rawServings)
         const instructions = normalizeInstructions(rawInstructions ?? [])
+        const ingredients = (rawIngredients ?? []).map((ingredient: string) =>
+          cleanIngredient(ingredient),
+        )
 
         const prepMinutes = getMinutesNumber(prepTime)
         const totalMinutes = getMinutesNumber(totalTime)

@@ -6,7 +6,9 @@ import { ChefHat } from "lucide-react"
 
 export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
   const [checked, setChecked] = useState(() => new Set())
+
   const {
+    url,
     name,
     ingredients,
     instructions,
@@ -47,12 +49,7 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
           className='w-[200px] h-[200px] object-cover rounded-[30px_50px_40px_60px] shadow-lg shadow-amber-900/20 sepia-[0.15] contrast-95'
         />
         <p className='text-sm text-ink-soft font-inter'>
-          clipped from{" "}
-          <span className='font-semibold text-ink'>
-            {" "}
-            {/* TODO: add get source logic to display clipped from {$} */}source
-            here.com
-          </span>
+          clipped from <span className='font-semibold text-ink'>{url}</span>
         </p>
       </div>
       <div className='flex justify-center divide-x text-line font-inter border-b-[1.5px] border-dashed'>
@@ -62,7 +59,6 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
         <RecipeStat label='totalTime' value={totalTime.replace(/^PT/, "")} />
       </div>
       <div className='grid md:grid-cols-[1fr_2fr]'>
-        {/* ingredients */}
         <div className='p-9 md:border-r text-line border-b-[0]'>
           <p
             className='text-xs font-bold uppercase mb-4 text-[#59654A] font-inter'
@@ -73,33 +69,42 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
             ingredients
           </p>
           <ul>
-            {ingredients.map((item, i) => (
-              <li
-                key={i}
-                onClick={() => toggleIngredient(i)}
-                className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line] font-lora'
-              >
-                <span
-                  className={`border-[1.5px] transition-colors ${
-                    checked.has(i)
-                      ? "border-terra bg-terra"
-                      : "border-[#CBB289] bg-transparent"
-                  } mt-0.5 w-[17px] h-[17px] rounded-[5px] flex-shrink-0`}
-                />
-                <span
-                  style={{
-                    textDecoration: checked.has(i) ? "line-through" : "none",
-                    opacity: checked.has(i) ? 0.55 : 1,
-                  }}
+            {ingredients.map((ingredient, i) => {
+              const match = ingredient.match(
+                /^(.*?)\s+(\((?:[^()]|\([^()]*\))*\))$/,
+              )
+              return (
+                <li
+                  key={i}
+                  onClick={() => toggleIngredient(i)}
+                  className='flex items-start gap-3 py-2.5 text-[15px] cursor-pointer select-none text-ink border-b last:border-b-0 border-line] font-lora'
                 >
-                  {item}
-                </span>
-              </li>
-            ))}
+                  <span
+                    className={`border-[1.5px] transition-colors ${
+                      checked.has(i)
+                        ? "border-terra bg-terra"
+                        : "border-[#CBB289] bg-transparent"
+                    } mt-0.5 w-[17px] h-[17px] rounded-[5px] flex-shrink-0`}
+                  />
+                  <span
+                    style={{
+                      textDecoration: checked.has(i) ? "line-through" : "none",
+                      opacity: checked.has(i) ? 0.55 : 1,
+                    }}
+                  >
+                    {match ? match[1] : ingredient}
+                    {match && (
+                      <div className='mt-0.5 text-sm text-ink-soft font-lora'>
+                        {match[2]}
+                      </div>
+                    )}
+                  </span>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
-        {/* steps */}
         <div className='p-9'>
           <p
             className='text-xs font-bold uppercase mb-4 font-inter'
@@ -110,24 +115,52 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
           >
             Steps
           </p>
-          <ol>
-            {instructions.map((step, i) => (
-              <li
-                key={i}
-                className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink font-lora'
-              >
-                <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9]'>
-                  {i + 1}
-                </span>
-                {step}
-              </li>
-            ))}
+
+          <ol className='space-y-0'>
+            {instructions.map((step, i) => {
+              const isSectionHeader = step.trim().endsWith(":")
+
+              if (isSectionHeader) {
+                return (
+                  <li
+                    key={i}
+                    className='pt-3 pb-3 first:pt-0 text-sm font-bold uppercase tracking-wide text-terra-deep font-inter'
+                  >
+                    {step}
+                  </li>
+                )
+              }
+
+              const previousHeaderIndex = instructions
+                .slice(0, i)
+                .findLastIndex((previousStep) =>
+                  previousStep.trim().endsWith(":"),
+                )
+
+              const stepNumber =
+                instructions
+                  .slice(previousHeaderIndex + 1, i)
+                  .filter((previousStep) => !previousStep.trim().endsWith(":"))
+                  .length + 1
+
+              return (
+                <li
+                  key={i}
+                  className='relative pl-11 pb-6 last:pb-0 text-[15.5px] leading-relaxed text-ink font-lora'
+                >
+                  <span className='absolute left-0 top-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-semibold bg-terra text-[#FBF3E9]'>
+                    {stepNumber}
+                  </span>
+
+                  {step}
+                </li>
+              )
+            })}
           </ol>
         </div>
 
-        {/* note band */}
         <div className='md:col-span-2 mx-9 mb-9 rounded-xl px-6 py-5 text-sm italic bg-cream-deep text-ink-soft font-lora'>
-          {/* TODO: */}
+          {/* TODO: Implement functionality */}
           add user notes here
         </div>
       </div>
