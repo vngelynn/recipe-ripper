@@ -1,18 +1,28 @@
 "use client"
 
-import { useState } from "react"
-import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
+import Link from "next/link"
 
-import UrlForm from "@/components/UrlForm"
-import RecipeDisplay from "@/components/RecipeDisplay"
 import PreviewNotice from "@/components/PreviewNotice"
+import RecipeDisplay from "@/components/RecipeDisplay"
+import UrlForm from "@/components/UrlForm"
+import { useEffect, useRef, useState } from "react"
 
 export default function ExtractPage() {
   const [recipe, setRecipe] = useState(null)
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const [extracted, setExtracted] = useState(false)
+  const recipeRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (recipe && extracted) {
+      recipeRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      })
+    }
+  }, [recipe, extracted])
 
   const extractRecipe = async (submittedUrl: string) => {
     setLoading(true)
@@ -82,10 +92,10 @@ export default function ExtractPage() {
         )}
 
         {recipe && (
-          <>
+          <div ref={recipeRef} className='scroll-mt-6'>
             <PreviewNotice />
             <RecipeDisplay recipe={recipe} />
-          </>
+          </div>
         )}
       </div>
     </div>

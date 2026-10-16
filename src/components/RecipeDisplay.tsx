@@ -35,23 +35,42 @@ export default function RecipeDisplay({ recipe }: { recipe: Recipe }) {
           "0 2px 0 rgba(59,46,34,0.05), 0 10px 28px rgba(59,46,34,0.09)",
       }}
     >
-      <div className='relative flex flex-col items-center justify-center text-center px-10 pt-11 pb-9 bg-gradient-to-r from-[#927c6d] via-amber-900/40 to-orange-100 '>
-        <ChefHat
-          size={34}
-          strokeWidth={1.4}
-          className='mx-auto mb-4 text-terra-deep'
-        />
-        <h1 className='text-4xl mb-2 font-fraunces font-medium italic'>
-          {name}
-        </h1>
-        <img
-          src={image}
-          className='w-[200px] h-[200px] object-cover rounded-[30px_50px_40px_60px] shadow-lg shadow-amber-900/20 sepia-[0.15] contrast-95'
-        />
-        <p className='text-sm text-ink-soft font-inter'>
-          clipped from <span className='font-semibold text-ink'>{url}</span>
-        </p>
+      <div
+        className={`relative flex flex-col items-center justify-center text-center px-10 pt-11 pb-9 overflow-hidden ${
+          image
+            ? ""
+            : "bg-gradient-to-r from-[#927c6d] via-amber-900/40 to-orange-100"
+        }`}
+      >
+        {image && (
+          <>
+            <img
+              src={image}
+              alt=''
+              aria-hidden='true'
+              className='absolute inset-0 w-full h-full object-cover object-center'
+            />
+            <div className='absolute inset-0 bg-[#F3E9D9]/75' />
+          </>
+        )}
+
+        <div className='relative z-10 flex flex-col items-center'>
+          <ChefHat
+            size={34}
+            strokeWidth={1.4}
+            className='mx-auto mb-4 text-terra-deep'
+          />
+
+          <h1 className='text-4xl mb-2 font-fraunces font-medium italic text-ink'>
+            {name}
+          </h1>
+
+          <p className='text-sm text-ink-soft font-inter break-words'>
+            clipped from <span className='font-semibold text-ink'>{url}</span>
+          </p>
+        </div>
       </div>
+
       <div className='flex justify-center divide-x text-line font-inter border-b-[1.5px] border-dashed'>
         <RecipeStat label='servings' value={servings} />
         <RecipeStat label='prepTime' value={prepTime.replace(/^PT/, "")} />
