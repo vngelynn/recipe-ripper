@@ -2,6 +2,37 @@ import axios from "axios"
 import * as cheerio from "cheerio"
 import { getMinutesNumber, formatDuration } from "@/utils/durationFormatters"
 
+type RecipeInstruction =
+  | string
+  | { text: string }
+  | {
+      "@type": "HowToSection"
+      name?: string
+      itemListElement?: RecipeInstruction[]
+    }
+
+const normalizeInstructions = (instructions: RecipeInstruction[]): string[] => {
+  return instructions.flatMap((step) => {
+    if (typeof step === "string") {
+      return [step]
+    }
+
+    if ("itemListElement" in step && step.itemListElement) {
+      const sectionInstructions = normalizeInstructions(step.itemListElement)
+
+      return step.name
+        ? [step.name, ...sectionInstructions]
+        : sectionInstructions
+    }
+
+    if ("text" in step && step.text) {
+      return [step.text]
+    }
+
+    return []
+  })
+}
+
 function findRecipe(data: unknown) {
   if (!data || typeof data !== "object") {
     return null
@@ -117,20 +148,11 @@ export async function extractRecipe(url: string) {
 
       const recipe = findRecipe(data)
 
-      const instructions = recipe.recipeInstructions.map(
-        (step: string | { text: string }) => {
-          if (typeof step === "string") {
-            return step
-          }
-
-          return step.text
-        },
-      )
-
       if (recipe) {
         const {
           name,
           recipeIngredient: ingredients,
+          recipeInstructions: rawInstructions,
           image: rawImage,
           recipeYield: rawServings,
           prepTime,
@@ -140,6 +162,7 @@ export async function extractRecipe(url: string) {
 
         const image = normalizeImage(rawImage)
         const servings = normalizeServings(rawServings)
+        const instructions = normalizeInstructions(rawInstructions ?? [])
 
         const prepMinutes = getMinutesNumber(prepTime)
         const totalMinutes = getMinutesNumber(totalTime)
