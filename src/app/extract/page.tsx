@@ -66,7 +66,7 @@ export default function ExtractPage() {
 
   return (
     <div className='min-h-screen w-full bg-cream text-ink'>
-      <div className='max-w-4xl mx-auto px-10 pb-24'>
+      <div className='max-w-5xl mx-auto px-10 pb-24'>
         <Link
           href='/'
           className='inline-flex items-center gap-1.5 text-sm font-medium mb-5 cursor-pointer text-ink-soft font-inter'
