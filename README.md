@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# gathered pantry
+
+**A calmer way to collect recipes from around the web.**
+
+Gathered Pantry is a personal full-stack web application designed to make saving and organizing online recipes simpler. Paste a recipe URL to extract its contents into a cleaner, more readable format, with the longer-term goal of building a personal recipe collection.
+
+The project is actively in development, with a focus on practical full-stack engineering, reliable data extraction, and a thoughtful user experience.
+
+## Current Features
+
+- **Recipe URL extraction:** Submit a recipe URL through the app's extraction flow.
+- **Structured recipe parsing:** Retrieve recipe data from Schema.org JSON-LD metadata using Axios and Cheerio.
+- **Recipe preview UI:** Display extracted recipe data in a dedicated interface.
+- **Authentication foundation:** Login and sign-up flows, including Google sign-in integration.
+- **Database foundation:** PostgreSQL-backed data model development for users and saved recipes.
+
+## Tech Stack
+
+| Area | Technologies |
+|---|---|
+| Frontend | Next.js, React, TypeScript, Tailwind CSS |
+| Backend | Next.js Route Handlers, Node.js |
+| Recipe extraction | Axios, Cheerio, Schema.org JSON-LD |
+| Database | PostgreSQL, Prisma tooling |
+| Authentication | Auth.js, Google OAuth |
+| Development | Git, npm |
+
+## How It Works
+
+1. A user submits a recipe URL.
+2. The application sends the URL to a Next.js API route.
+3. The server retrieves the webpage and searches for structured recipe metadata.
+4. Extracted data is normalized and returned to the client.
+5. The interface presents the available recipe information for review.
+
+Recipe extraction depends on the source website's markup and structured data, so results can vary between websites.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (use the version specified by the project, if provided)
+- npm
+- PostgreSQL
+- Environment variables configured for the services you enable
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Configure your local environment variables using the project's environment-variable template or setup instructions.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Start the development server:
 
-## Deploy on Vercel
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Open [http://localhost:3000](http://localhost:3000).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+*Note: Database and authentication configuration may be required depending on which features you run. Setup instructions will be expanded as those features are completed.*
+
+## Project Status
+
+Gathered Pantry is an evolving portfolio project. Features are developed incrementally, with an emphasis on correctness, maintainability, and a cohesive user experience.
+
